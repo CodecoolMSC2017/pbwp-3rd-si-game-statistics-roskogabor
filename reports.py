@@ -29,16 +29,27 @@ def get_latest(file_name):
             datas.append(datalist)
         for i in range(len(datas)):
             if latest == "" or datas[i][2] > latest[1]:
-                latest = [datas[i][0],datas[i][2]]
+                latest = [datas[i][0], datas[i][2]]
         return latest[0]
 
 
 def count_by_genre(file_name, genre):
-    pass
+    with open(file_name, "r") as genredata:
+        genres = genredata.readlines()
+        datas = []
+        for i in range(len(genres)):
+            datalist = genres[i].split("\t")
+            datas.append(datalist)
+        counter = 0
+        for i in range(len(datas)):
+            if datas[i][3] == genre:
+                counter += 1
+        return counter
 
 
 def get_line_number_by_title(file_name, title):
     pass
 
+
 if __name__ == "__main__":
-    print(get_latest("game_stat.txt"))
+    print(count_by_genre("game_stat.txt", "First-person shooter"))
