@@ -37,5 +37,19 @@ def get_selling_avg(file_name):
     return avgofselling
 
 
+def count_longest_title(file_name):
+    with open(file_name, "r") as titledata:
+        titles = titledata.readlines()
+        datas = []
+        for i in range(len(titles)):
+            datalist = titles[i].split("\t")
+            datas.append(datalist)
+        longest = ""
+        for i in range(len(datas)):
+            if longest == "" or len(datas[i][0]) > longest:
+                longest = len(datas[i][0])
+    return longest
+
+
 if __name__ == "__main__":
-    print(get_selling_avg("game_stat.txt"))
+    print(count_longest_title("game_stat.txt"))
