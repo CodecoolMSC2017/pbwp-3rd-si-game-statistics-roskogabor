@@ -26,5 +26,16 @@ def sum_sold(file_name):
     return sumsold
 
 
+def get_selling_avg(file_name):
+    with open(file_name, "r") as gamedata:
+        games = gamedata.readlines()
+        datas = []
+        for i in range(len(games)):
+            datalist = games[i].split("\t")
+            datas.append(float(datalist[1]))
+        avgofselling = sum_sold(file_name) / len(datas)
+    return avgofselling
+
+
 if __name__ == "__main__":
-    print(sum_sold("game_stat.txt"))
+    print(get_selling_avg("game_stat.txt"))
