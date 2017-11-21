@@ -48,8 +48,15 @@ def count_by_genre(file_name, genre):
 
 
 def get_line_number_by_title(file_name, title):
-    pass
+    with open(file_name, "r") as titledata:
+        datas = titledata.readlines()
+        titles = []
+        for i in range(len(datas)):
+            titlelist = datas[i].split("\t")
+            titles.append(titlelist[0])
+        listindex = titles.index(title)
+    return int(listindex) + 1
 
 
 if __name__ == "__main__":
-    print(count_by_genre("game_stat.txt", "First-person shooter"))
+    print(get_line_number_by_title("game_stat.txt", "Diablo III"))
