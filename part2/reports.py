@@ -1,3 +1,4 @@
+import math
 
 
 # Report functions
@@ -49,6 +50,17 @@ def count_longest_title(file_name):
             if longest == "" or len(datas[i][0]) > longest:
                 longest = len(datas[i][0])
     return longest
+
+
+def get_date_avg(file_name):
+    with open(file_name, "r") as yeardata:
+        years = yeardata.readlines()
+        datas = []
+        for i in range(len(years)):
+            datalist = years[i].split("\t")
+            datas.append(int(datalist[2]))
+        avgofyears = sum(datas) / len(datas)
+    return math.ceil(avgofyears)
 
 
 if __name__ == "__main__":
