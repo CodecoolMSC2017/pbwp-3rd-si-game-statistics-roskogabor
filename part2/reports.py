@@ -1,4 +1,5 @@
 import math
+import re
 
 
 # Report functions
@@ -63,5 +64,34 @@ def get_date_avg(file_name):
     return math.ceil(avgofyears)
 
 
+def convertdata(datalist):
+    for i in range(len(datalist)):
+        datalist[i] = datalist[i].strip()
+        m = re.search(r'\.', datalist[i])
+        try:
+            print(m.start())
+            datalist[i] = float(datalist[i])
+        except:
+            try:
+                datalist[i] = int(datalist[i])
+            except:
+                datalist[i] = str(datalist[i])
+    return datalist
+
+
+def get_game(file_name, title):
+    with open(file_name, "r") as titledata:
+        titles = titledata.readlines()
+        datas = []
+        for i in range(len(titles)):
+            datalist = titles[i].split("\t")
+            datas.append(datalist)
+        for i in range(len(datas)):
+            if datas[i][0] == title:
+                gamedata = datas[i]
+        gamedata = convertdata(gamedata)
+    return gamedata
+
+
 if __name__ == "__main__":
-    print(count_longest_title("game_stat.txt"))
+    print(get_game("game_stat.txt","The Sims"))
