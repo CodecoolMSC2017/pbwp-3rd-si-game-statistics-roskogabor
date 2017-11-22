@@ -1,6 +1,7 @@
 import reports
 
 
+# datas to work with
 file_name = "game_stat.txt"
 gameyear = "2004"
 gametitle = "Diablo II"

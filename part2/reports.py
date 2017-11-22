@@ -69,7 +69,7 @@ def convertdata(datalist):
         datalist[i] = datalist[i].strip()
         m = re.search(r'\.', datalist[i])
         try:
-            print(m.start())
+            var = m.start()
             datalist[i] = float(datalist[i])
         except:
             try:
