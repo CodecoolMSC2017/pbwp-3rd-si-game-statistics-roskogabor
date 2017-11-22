@@ -3,64 +3,61 @@ import re
 
 
 # Report functions
+def openfile(fname):
+    with open(fname, "r") as datas:
+        datalist = datas.readlines()
+    return datalist
+
+
+def makelist(datas, indexof, datatype):
+    datalist = []
+    for i in range(len(datas)):
+        data = datas[i].split("\t")
+        if indexof != "x":
+            datalist.append(datatype(data[indexof]))
+        else:
+            datalist.append(data)
+    return datalist
+
+
 def get_most_played(file_name):
-    with open(file_name, "r") as gamedata:
-        games = gamedata.readlines()
-        datas = []
-        for i in range(len(games)):
-            datalist = games[i].split("\t")
-            datas.append(datalist)
-        most = ""
-        for i in range(len(datas)):
-            if most == "" or float(datas[i][1]) > most[1]:
-                most = [datas[i][0], float(datas[i][1])]
+    games = openfile(file_name)
+    datas = makelist(games, "x", str)
+    most = ""
+    for i in range(len(datas)):
+        if most == "" or float(datas[i][1]) > most[1]:
+            most = [datas[i][0], float(datas[i][1])]
     return most[0]
 
 
 def sum_sold(file_name):
-    with open(file_name, "r") as gamedata:
-        games = gamedata.readlines()
-        datas = []
-        for i in range(len(games)):
-            datalist = games[i].split("\t")
-            datas.append(float(datalist[1]))
-        sumsold = sum(datas)
+    games = openfile(file_name)
+    datas = makelist(games, 1, float)
+    sumsold = sum(datas)
     return sumsold
 
 
 def get_selling_avg(file_name):
-    with open(file_name, "r") as gamedata:
-        games = gamedata.readlines()
-        datas = []
-        for i in range(len(games)):
-            datalist = games[i].split("\t")
-            datas.append(float(datalist[1]))
-        avgofselling = sum_sold(file_name) / len(datas)
+    games = openfile(file_name)
+    datas = makelist(games, 1, float)
+    avgofselling = sum_sold(file_name) / len(datas)
     return avgofselling
 
 
 def count_longest_title(file_name):
-    with open(file_name, "r") as titledata:
-        titles = titledata.readlines()
-        datas = []
-        for i in range(len(titles)):
-            datalist = titles[i].split("\t")
-            datas.append(datalist)
-        longest = ""
-        for i in range(len(datas)):
-            if longest == "" or len(datas[i][0]) > longest:
-                longest = len(datas[i][0])
+    titles = openfile(file_name)
+    datas = makelist(titles, "x", str)
+    longest = ""
+    for i in range(len(datas)):
+        if longest == "" or len(datas[i][0]) > longest:
+            longest = len(datas[i][0])
     return longest
 
 
 def get_date_avg(file_name):
-    with open(file_name, "r") as yeardata:
-        years = yeardata.readlines()
-        datas = []
-        for i in range(len(years)):
-            datalist = years[i].split("\t")
-            datas.append(int(datalist[2]))
-        avgofyears = sum(datas) / len(datas)
+    years = openfile(file_name)
+    datas = makelist(years, 2, int)
+    avgofyears = sum(datas) / len(datas)
     return math.ceil(avgofyears)
 
 
@@ -80,16 +77,12 @@ def convertdata(datalist):
 
 
 def get_game(file_name, title):
-    with open(file_name, "r") as titledata:
-        titles = titledata.readlines()
-        datas = []
-        for i in range(len(titles)):
-            datalist = titles[i].split("\t")
-            datas.append(datalist)
-        for i in range(len(datas)):
-            if datas[i][0] == title:
-                gamedata = datas[i]
-        gamedata = convertdata(gamedata)
+    titles = openfile(file_name)
+    datas = makelist(titles, "x", str)
+    for i in range(len(datas)):
+        if datas[i][0] == title:
+            gamedata = datas[i]
+    gamedata = convertdata(gamedata)
     return gamedata
 
 
